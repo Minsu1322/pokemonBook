@@ -1,7 +1,9 @@
 "use client";
 import { Pokemon } from "@/app/types/pokemon";
 import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 
 const PokemonList = () => {
   const fetchPokemons = async (): Promise<Pokemon[]> => {
@@ -34,12 +36,18 @@ const PokemonList = () => {
           key={pokemon.id}
           className="border-solid border-2 border-sky-500 w-1/6 h-1/5 p-4 m-2 flex flex-col items-center"
         >
-          <div className="mt-2 w-16 h-16 bg-gray-200 rounded-full"></div>
-
-          <div className="text-center font-bold">도감번호: {pokemon.id}</div>
-          <div className="text-center">
-            {pokemon.korean_name || pokemon.name}
-          </div>
+          <Link href={`/pokemons/${pokemon.id}`}>
+            <Image
+              src={pokemon.sprites.front_default}
+              alt={pokemon.korean_name}
+              width={96}
+              height={96}
+            />
+            <div className="text-center font-bold">도감번호: {pokemon.id}</div>
+            <div className="text-center">
+              {pokemon.korean_name || pokemon.name}
+            </div>
+          </Link>
         </div>
       ))}
     </div>
